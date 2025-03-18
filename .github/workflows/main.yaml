@@ -91,8 +91,16 @@ jobs:
       #    docker ps -q --filter "name=cicdapp" | grep -q . && docker stop cicdapp && docker rm -fv cicdapp
        
       - name: Run Docker Image to serve users
-        run: |
-         docker run -d -p 8080:8080 --name=cicdapp -e 'AWS_ACCESS_KEY_ID=${{ secrets.AKIAXNGUVEVW73CCTRJE }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.78DqvZ07fSk4v+9vP/KXUMvDoi8UHpzps59/Cc0L }}' -e 'AWS_REGION=${{ secrets.ap-south-1 }}' -e 'ECR_REGISTRY= ${{secrets.509399606637.dkr.ecr.ap-south-1.amazonaws.com/cicd_app}}' -e 'ECR_REPOSITORY_NAME=${{ secrets.cicd_app }}':latest
-      - name: Clean previous images and containers
-        run: |
-         docker system prune -f
+  run: |
+    docker run -d -p 8080:8080 \
+      --name=cicdapp \
+      -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+      -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+      -e AWS_REGION=${{ secrets.AWS_REGION }} \
+      -e ECR_REGISTRY=${{ secrets.ECR_REGISTRY }} \
+      -e ECR_REPOSITORY_NAME=${{ secrets.ECR_REPOSITORY_NAME }} \
+      ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+
+    - name: Clean previous images and containers
+  run: |
+    docker system prune -f
