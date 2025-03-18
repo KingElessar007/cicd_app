@@ -86,13 +86,13 @@ jobs:
         run: |
          docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
          
-      - name: Stop and remove container if running
-        run: |
-         docker ps -q --filter "name=cicdapp" | grep -q . && docker stop cicdapp && docker rm -fv cicdapp
+      # - name: Stop and remove container if running
+      #   run: |
+      #    docker ps -q --filter "name=cicdapp" | grep -q . && docker stop cicdapp && docker rm -fv cicdapp
        
       - name: Run Docker Image to serve users
         run: |
-         docker run -d -p 8080:8080 --name=cicdapp -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+         docker run -d -p 8080:8080 --name=cicdapp -e 'AWS_ACCESS_KEY_ID=${{ secrets.AKIAXNGUVEVW73CCTRJE }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.78DqvZ07fSk4v+9vP/KXUMvDoi8UHpzps59/Cc0L }}' -e 'AWS_REGION=${{ secrets.ap-south-1 }}'  ${{secrets.509399606637.dkr.ecr.ap-south-1.amazonaws.com/cicd_app}}/${{ secrets.cicd_app }}:latest
       - name: Clean previous images and containers
         run: |
          docker system prune -f
