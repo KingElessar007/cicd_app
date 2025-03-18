@@ -101,6 +101,7 @@ jobs:
       -e ECR_REPOSITORY_NAME=${{ secrets.ECR_REPOSITORY_NAME }} \
       ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
 
-    - name: Clean previous images and containers
-  run: |
-    docker system prune -f
+      - name: Clean previous images and containers
+        run: |
+          docker system prune -f
+
